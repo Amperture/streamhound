@@ -3,14 +3,19 @@ from bibliopixel.builder import Builder
 
 class AnimationController:
 
+    default_anim_desc = {}
+
     def __init__(self):
+        self.default_anim_desc = {
+            'animation': {
+                'typename': '$bpa.strip.Twinkle',
+                'colors': ('[0, 0, 255], [0, 255, 0]')
+            }
+        }
         self.controller = Builder(
-            desc={},
+            desc=self.default_anim_desc,
             threaded=True
         )
-        self.controller.desc.animation['typename'] = '$bpa.strip.Twinkle'
-        self.controller.desc.animation['colors'] = ('[255, 127, 127], '
-                                                    '[0, 255, 0]')
         self.controller.start()
         return
 
@@ -21,6 +26,7 @@ class AnimationController:
         self.controller.stop()
 
     def delete(self):
+        self.controller.stop()
         del self.controller
 
     def newAnim(self, animName, animColorList, colorPlural=False):
