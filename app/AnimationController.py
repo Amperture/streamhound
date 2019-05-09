@@ -40,6 +40,18 @@ class AnimationController:
         self._launchAnim(desc)
         return
 
+    def colorsAppend(self, animColorList):
+        if not self.default_anim_desc['animation']['colors']:
+            raise Exception(
+                "Cannot append colors, singular color is being used!"
+            )
+        new_colors = (self.default_anim_desc['animation']['colors'] +
+                      "," +
+                      animColorList)
+        self.default_anim_desc['animation']['colors'] = new_colors
+        self._launchAnim(self.default_anim_desc)
+        return 0
+
     def _launchAnim(self, desc):
         self.controller.stop()
 

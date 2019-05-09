@@ -1,5 +1,5 @@
 from app import bp, app
-from flask import request
+from flask import request, jsonify
 from colour import Color
 # import json
 # import time
@@ -89,18 +89,20 @@ def colorAppend():
 
     colorsString = ""
     for colorName in colorList:
-        c = Color(colorName)
-        colorsString += "[{},{},{}],".format(
-            int(255*c.red), int(255*c.green), int(255*c.blue)
-        )
-    colorsString = colorsString[0:-1]
-    print(colorsString)
+        try:
+            c = Color(colorName)
+            colorsString += "[{},{},{}],".format(
+                int(255*c.red), int(255*c.green), int(255*c.blue)
+            )
+        except Exception as e:
+            print(str(e))
+            return jsonify({
+                'error': str(e)
+            }), 500
 
-    colors = colorsString
-    bp.newAnim(
-        '$bpa.strip.Twinkle',
-        colors
-    )
+    colorsString = colorsString[0:-1]
+    # print(colorsString)
+    bp.colorsAppend(colorsString)
     return "Animation animation set to RGB!"
 
 
@@ -116,7 +118,7 @@ def stopanim():
     return "Animation stopped!"
 
 
-@app.route('anim/set/custom', methods=['POST'])
+@app.route('/anim/set/custom', methods=['POST'])
 def animSetCustom():
     """
     Permanently reset the default animation to a custom definition.
@@ -125,7 +127,7 @@ def animSetCustom():
     return "TODO"
 
 
-@app.route('anim/set/defined', methods=['POST'])
+@app.route('/anim/set/defined', methods=['POST'])
 def animSetDefined():
     """
     Permanently reset the default animation to pre-defined value.
