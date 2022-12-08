@@ -2,7 +2,7 @@ beautifulsoup4==4.7.1
 BiblioPixel==3.4.44
 BiblioPixelAnimations==3.20181225.205034
 BiblioPixelTriggers==1.0.2
-certifi==2019.3.9
+certifi==2022.12.7
 chardet==3.0.4
 Click==7.0
 croniter==0.3.29
